@@ -1,0 +1,61 @@
+{
+  "module": "trainer",
+  "title": "Treino A",
+  "profile": {
+    "name": "",
+    "age": "",
+    "weight": "",
+    "height": "",
+    "sex": ""
+  },
+  "items": [
+    {
+      "id": "agachamento-livre",
+      "label": "Agachamento livre",
+      "load": 20,
+      "loadUnit": "kg",
+      "loadDate": "2026-03-08",
+      "videoUrl": "https://www.youtube.com/results?search_query=agachamento+livre",
+      "benefitInsight": "Fortalece quadríceps, glúteos e core. Excelente para força funcional.",
+      "progressionStep": 2,
+      "recoveryDays": 7,
+      "done": false
+    },
+    {
+      "id": "leg-press",
+      "label": "Leg press",
+      "load": 80,
+      "loadUnit": "kg",
+      "loadDate": "2026-03-08",
+      "videoUrl": "https://www.youtube.com/results?search_query=leg+press",
+      "benefitInsight": "Trabalha quadríceps e glúteos com mais estabilidade para progressão segura.",
+      "progressionStep": 5,
+      "recoveryDays": 7,
+      "done": false
+    },
+    {
+      "id": "cadeira-extensora",
+      "label": "Cadeira extensora",
+      "load": 30,
+      "loadUnit": "kg",
+      "loadDate": "2026-03-08",
+      "videoUrl": "https://www.youtube.com/results?search_query=cadeira+extensora",
+      "benefitInsight": "Isola quadríceps e ajuda no controle de execução.",
+      "progressionStep": 2,
+      "recoveryDays": 7,
+      "done": false
+    },
+    {
+      "id": "esteira",
+      "label": "Esteira",
+      "load": 6.5,
+      "loadUnit": "km/h",
+      "loadDate": "2026-03-08",
+      "videoUrl": "https://www.youtube.com/results?search_query=esteira+caminhada+academia",
+      "benefitInsight": "Aumenta condicionamento e fecha o treino com atividade aeróbica.",
+      "progressionStep": 0.5,
+      "recoveryDays": 2,
+      "done": false
+    }
+  ]
+}

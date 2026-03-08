@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1220" />
+  <title>HERO OS</title>
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>🤖 HERO Trainer</h1>
+      <p>Abra → marque → treine → vá embora</p>
+    </div>
+    <button id="installBtn" class="ghost hidden">Instalar</button>
+  </header>
+
+  <main class="container">
+    <section id="profileSection" class="card"></section>
+
+    <section class="section-title">
+      <h2>Treino de hoje</h2>
+      <span id="completionBadge" class="badge">0%</span>
+    </section>
+
+    <section id="exerciseList" class="exercise-list"></section>
+
+    <footer class="footer-actions card">
+      <button id="saveWorkoutBtn">Salvar treino</button>
+      <button id="exportJsonBtn" class="secondary">Exportar JSON</button>
+      <button id="resetChecksBtn" class="secondary danger">Resetar checks</button>
+    </footer>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
