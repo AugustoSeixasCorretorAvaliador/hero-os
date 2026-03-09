@@ -21,7 +21,8 @@ export function createInsight() {
       const canProgress = eligibleDate <= today;
       const nextLoad = canProgress ? Number((baseLoad + step).toFixed(1)) : baseLoad;
 
-      const benefit = item.benefit || item.benefitInsight || 'Ajuda na execução consistente e no progresso do treino.';
+      const benefit =
+        item.benefit || item.benefitInsight || 'Ajuda na execu\u00e7\u00e3o consistente e no progresso do treino.';
       const nextDate = eligibleDate;
 
       return {
@@ -30,8 +31,14 @@ export function createInsight() {
         nextDate,
         recoveryReminder: canProgress
           ? 'Pronto para progredir hoje.'
-          : `Recupere até ${nextDate} antes de aumentar carga.`
+          : `Recupere at\u00e9 ${nextDate} antes de aumentar carga.`
       };
+    },
+
+    build({ benefit, delta, suggestedLoad, loadUnit }) {
+      const deltaText =
+        delta > 0 ? `Sugest\u00e3o pr\u00f3xima carga: +${delta}${loadUnit}.` : 'Mantenha a mesma carga hoje.';
+      return `${benefit}. ${deltaText}`;
     }
   };
 }

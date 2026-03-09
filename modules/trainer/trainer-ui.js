@@ -18,7 +18,7 @@ function downloadJson(filename, data) {
   URL.revokeObjectURL(url);
 }
 
-export function createTrainerUI({ engine, state, elements }) {
+export function createTrainerUI({ engine, elements }) {
   let deferredPrompt = null;
 
   function renderProfile() {
@@ -74,13 +74,20 @@ export function createTrainerUI({ engine, state, elements }) {
     const current = engine.getState();
     elements.completionBadge.textContent = `${engine.completion()}%`;
 
-    elements.exerciseList.innerHTML = current.items.map((item) => `
+    if (!current.items.length) {
+      elements.exerciseList.innerHTML = '<div class="card">Nenhum treino planejado para hoje.</div>';
+      return;
+    }
+
+    elements.exerciseList.innerHTML = current.items
+      .map(
+        (item) => `
       <article class="exercise-card ${item.done ? 'done' : ''}" data-id="${item.id}">
         <div class="exercise-top">
           <input type="checkbox" ${item.done ? 'checked' : ''} data-action="toggle" data-id="${item.id}" />
           <div>
             <div class="exercise-name">${item.done ? '✅ ' : ''}${item.label}</div>
-            <div class="small">Carga registrada em ${item.loadDate}</div>
+            <div class="small">Último treino: ${item.lastDate || '—'} • Equipamento: ${item.equipment || '—'}</div>
           </div>
         </div>
 
@@ -88,14 +95,16 @@ export function createTrainerUI({ engine, state, elements }) {
           <button class="icon-btn secondary" data-action="minus" data-id="${item.id}">−</button>
           <div class="load-value">${item.load} ${item.loadUnit}</div>
           <button class="icon-btn secondary" data-action="plus" data-id="${item.id}">+</button>
-          <a class="link-btn" href="${item.videoUrl}" target="_blank" rel="noopener noreferrer">🔗 Vídeo</a>
+          <a class="link-btn" href="${item.videoUrl}" target="_blank" rel="noopener noreferrer">📺 Vídeo</a>
         </div>
 
-        <div class="insight"><strong>Insight:</strong> ${item.suggestion.benefit}</div>
-        <div class="suggestion"><strong>Próxima sugestão:</strong> ${item.suggestion.nextLoad} ${item.loadUnit} em ${item.suggestion.nextDate}</div>
-        <div class="hint">${item.suggestion.recoveryReminder}</div>
+        <div class="insight"><strong>Insight:</strong> ${item.insight}</div>
+        <div class="suggestion"><strong>Próxima carga:</strong> ${item.suggestedLoad} ${item.loadUnit}</div>
+        <div class="hint">Recuperação mínima: ${item.recoveryDays || 0} dias</div>
       </article>
-    `).join('');
+    `
+      )
+      .join('');
 
     elements.exerciseList.querySelectorAll('[data-action]').forEach((node) => {
       node.addEventListener('click', (event) => {
