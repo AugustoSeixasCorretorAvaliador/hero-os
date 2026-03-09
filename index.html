@@ -8,6 +8,108 @@
   <link rel="apple-touch-icon" href="./icons/hero-trainer.png" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="stylesheet" href="./style.css" />
+  <style>
+    /* Bloco de licença (adaptado do PWA HERO.IA) */
+    .license-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #fde8d7;
+      color: #8a4b12;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .license-pill.success {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    .license-pill.danger {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .license-card {
+      margin: 16px 0;
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid #1f2937;
+      background: #0f172a;
+      color: #e5e7eb;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    }
+    .license-card h2 {
+      margin: 4px 0 6px;
+    }
+    .license-card .muted {
+      color: #94a3b8;
+      font-size: 13px;
+      margin: 0;
+    }
+    .license-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .device-box {
+      min-width: 240px;
+      border: 1px dashed #334155;
+      padding: 10px;
+      border-radius: 10px;
+      background: #0b1220;
+      font-size: 13px;
+      color: #cbd5e1;
+    }
+    .device-box code {
+      display: block;
+      margin: 4px 0 8px;
+      color: #e2e8f0;
+      word-break: break-all;
+    }
+    .license-form label {
+      display: block;
+      margin-bottom: 12px;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+    .license-form span {
+      display: block;
+      margin-bottom: 6px;
+      color: #94a3b8;
+      font-size: 12px;
+    }
+    .license-form input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      background: #0b1220;
+      color: #e2e8f0;
+    }
+    .license-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .license-actions button {
+      width: 100%;
+    }
+    .license-lock {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #0b1220;
+      color: #e5e7eb;
+      text-align: center;
+      padding: 24px;
+    }
+    .hidden {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
   <header class="app-header">
@@ -20,6 +122,37 @@
     </div>
     <button id="installBtn" class="ghost hidden">Instalar</button>
   </header>
+
+  <div class="license-pill" id="license-pill">Licença não validada</div>
+
+  <section class="license-card" id="license-card">
+    <div class="license-head">
+      <div>
+        <p class="eyebrow muted">Ativação obrigatória</p>
+        <h2>Valide sua licença</h2>
+        <p class="muted">Informe licença + e-mail. A validação ocorre direto no Supabase.</p>
+      </div>
+      <div class="device-box">
+        <span>ID do dispositivo</span>
+        <code id="device-id"></code>
+        <button class="ghost" id="copy-device" type="button">Copiar</button>
+      </div>
+    </div>
+    <form id="license-form" class="license-form">
+      <label>
+        <span>License key</span>
+        <input id="license-key" name="license_key" placeholder="LIC-XXXX-XXXX" required />
+      </label>
+      <label>
+        <span>E-mail</span>
+        <input id="license-email" name="email" type="email" placeholder="voce@empresa.com" required />
+      </label>
+      <div class="license-actions">
+        <button id="btn-activate" type="submit">Ativar / Validar licença</button>
+        <p id="license-status" class="status muted">Informe os dados e ative para liberar o uso.</p>
+      </div>
+    </form>
+  </section>
 
   <main class="container">
     <section id="profileSection" class="card"></section>
@@ -38,6 +171,6 @@
     </footer>
   </main>
 
-  <script type="module" src="./app.js"></script>
+  <script type="module" src="./bootstrap.js"></script>
 </body>
 </html>
