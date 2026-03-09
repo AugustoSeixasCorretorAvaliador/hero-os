@@ -161,13 +161,19 @@ export function createEngine({ storage, insight, library, trainingPlan }) {
     const today = todayISO(date);
     const dayKey = dayKeyFromDate(date);
 
+    const exerciseIds = exercisesForDay(trainingPlan, dayKey);
+    const planSignature = `${dayKey}:${exerciseIds.join('|')}`;
+
     const saved = storage.get('state');
-    if (saved && saved.date === today) {
+    const savedSignature =
+      saved && saved.items ? `${saved.dayKey}:${saved.items.map((i) => i.id).join('|')}` : null;
+
+    const canReuseSaved = saved && saved.date === today && savedSignature === planSignature;
+    if (canReuseSaved) {
       state = saved;
       return state;
     }
 
-    const exerciseIds = exercisesForDay(trainingPlan, dayKey);
     const items = exerciseIds.map((id) => hydrateExercise(id, today));
 
     state = {
