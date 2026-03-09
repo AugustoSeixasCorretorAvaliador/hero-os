@@ -26,6 +26,19 @@ export function createStorage(namespace = 'hero-os') {
       localStorage.removeItem(key(name));
     },
 
+    removeMany(names = []) {
+      names.forEach((n) => localStorage.removeItem(key(n)));
+    },
+
+    clearAll() {
+      const toDelete = [];
+      for (let i = 0; i < localStorage.length; i += 1) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith(`${namespace}:`)) toDelete.push(k);
+      }
+      toDelete.forEach((k) => localStorage.removeItem(k));
+    },
+
     export() {
       const dump = {};
       for (let i = 0; i < localStorage.length; i += 1) {

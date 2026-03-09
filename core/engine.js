@@ -92,7 +92,10 @@ function exercisesForDay(plan, dayKey) {
 
 export function createEngine({ storage, insight, library, trainingPlan }) {
   const libraryMap = indexLibrary(library);
+  const planFromStorage = storage.get('trainingPlan', null);
   let history = storage.get('trainingHistory', []);
+  let plan = planFromStorage || trainingPlan || { trainingDays: [] };
+  let planWasStored = planFromStorage !== null;
   let state = {
     date: todayISO(),
     dayKey: dayKeyFromDate(),
@@ -161,7 +164,7 @@ export function createEngine({ storage, insight, library, trainingPlan }) {
     const today = todayISO(date);
     const dayKey = dayKeyFromDate(date);
 
-    const exerciseIds = exercisesForDay(trainingPlan, dayKey);
+    const exerciseIds = exercisesForDay(plan, dayKey);
     const planSignature = `${dayKey}:${exerciseIds.join('|')}`;
 
     const saved = storage.get('state');
@@ -185,6 +188,45 @@ export function createEngine({ storage, insight, library, trainingPlan }) {
 
     storage.set('state', state);
     return state;
+  }
+
+  function hasPlan() {
+    const list = plan?.trainingDays || plan?.training_days || plan;
+    if (Array.isArray(list)) return list.length > 0;
+    if (list && typeof list === 'object') return Object.keys(list).length > 0;
+    return false;
+  }
+
+  function updatePlan(newPlan) {
+    plan = newPlan || { trainingDays: [] };
+    storage.set('trainingPlan', plan);
+    planWasStored = true;
+    storage.removeMany(['state', 'trainingHistory']);
+    return generateWorkout();
+  }
+
+  function resetPlan() {
+    plan = { trainingDays: [] };
+    planWasStored = false;
+    storage.removeMany(['state', 'trainingHistory', 'trainingPlan']);
+    state = { ...state, items: [] };
+    return state;
+  }
+
+  function getTrainingPlan() {
+    return plan;
+  }
+
+  function getLibraryList() {
+    return Object.values(libraryMap).map((item) => ({
+      id: item.id,
+      label: item.label || item.id,
+      category: item.category
+    }));
+  }
+
+  function hasStoredPlan() {
+    return planWasStored;
   }
 
   function save() {
@@ -275,6 +317,12 @@ export function createEngine({ storage, insight, library, trainingPlan }) {
     resetChecks,
     completion,
     exportData,
-    save
+    save,
+    hasPlan,
+    updatePlan,
+    resetPlan,
+    getTrainingPlan,
+    getLibraryList,
+    hasStoredPlan
   };
 }

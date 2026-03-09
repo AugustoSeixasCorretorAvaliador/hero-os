@@ -20,6 +20,7 @@ function downloadJson(filename, data) {
 
 export function createTrainerUI({ engine, elements }) {
   let deferredPrompt = null;
+  let editingPlan = !engine.hasStoredPlan();
 
   function renderProfile() {
     const profile = engine.getState().profile;
@@ -70,7 +71,108 @@ export function createTrainerUI({ engine, elements }) {
     }
   }
 
+  function renderPlanBuilder() {
+    const library = engine.getLibraryList();
+    const plan = engine.getTrainingPlan();
+    const draft = {};
+
+    const baseDays = [
+      { key: 'monday', label: 'Segunda' },
+      { key: 'tuesday', label: 'Terça' },
+      { key: 'wednesday', label: 'Quarta' },
+      { key: 'thursday', label: 'Quinta' },
+      { key: 'friday', label: 'Sexta' },
+      { key: 'saturday', label: 'Sábado' },
+      { key: 'sunday', label: 'Domingo' }
+    ];
+
+    baseDays.forEach((d) => {
+      const entry = (plan.trainingDays || []).find((p) => p.day === d.key);
+      draft[d.key] = entry ? [...(entry.exercises || [])] : [];
+    });
+
+    elements.exerciseList.innerHTML = `
+      <section class="card">
+        <div class="profile-head" style="margin-bottom:8px;">
+          <div>
+            <h2>Plano semanal</h2>
+            <div class="small">Escolha os dias e atribua exercícios fixos.</div>
+          </div>
+        </div>
+        <div class="plan-grid">
+          ${baseDays
+            .map(
+              (d) => `
+            <div class="plan-day">
+              <label>
+                <input type="checkbox" data-day-check="${d.key}" ${draft[d.key].length ? 'checked' : ''}/>
+                ${d.label}
+              </label>
+              <select data-day-select="${d.key}" multiple size="5" ${draft[d.key].length ? '' : 'disabled'}>
+                ${library
+                  .map(
+                    (ex) =>
+                      `<option value="${ex.id}" ${draft[d.key].includes(ex.id) ? 'selected' : ''}>${ex.label} (${
+                        ex.category || 'geral'
+                      })</option>`
+                  )
+                  .join('')}
+              </select>
+            </div>
+          `
+            )
+            .join('')}
+        </div>
+        <div class="inline-row" style="margin-top:12px;">
+          <button id="savePlanBtn">Salvar plano</button>
+          <button id="cancelPlanBtn" class="secondary">Cancelar</button>
+        </div>
+        <div class="hint">Selecione ao menos um dia com exercícios.</div>
+      </section>
+    `;
+
+    elements.exerciseList.querySelectorAll('[data-day-check]').forEach((cb) => {
+      cb.addEventListener('change', (e) => {
+        const day = e.currentTarget.dataset.dayCheck;
+        const select = elements.exerciseList.querySelector(`[data-day-select="${day}"]`);
+        select.disabled = !e.currentTarget.checked;
+        if (!e.currentTarget.checked) draft[day] = [];
+      });
+    });
+
+    elements.exerciseList.querySelectorAll('[data-day-select]').forEach((sel) => {
+      sel.addEventListener('change', (e) => {
+        const day = e.currentTarget.dataset.daySelect;
+        draft[day] = Array.from(e.currentTarget.selectedOptions).map((o) => o.value);
+      });
+    });
+
+    elements.exerciseList.querySelector('#savePlanBtn').onclick = () => {
+      const trainingDays = baseDays
+        .map((d) => (draft[d.key]?.length ? { day: d.key, title: d.label, exercises: draft[d.key] } : null))
+        .filter(Boolean);
+      if (!trainingDays.length) {
+        alert('Escolha ao menos um dia e seus exercícios.');
+        return;
+      }
+      engine.updatePlan({ trainingDays });
+      editingPlan = false;
+      renderExercises();
+    };
+
+    elements.exerciseList.querySelector('#cancelPlanBtn').onclick = () => {
+      editingPlan = false;
+      renderExercises();
+    };
+  }
+
   function renderExercises() {
+    if (!engine.hasPlan() || editingPlan) {
+      elements.completionBadge.textContent = '0%';
+      renderPlanBuilder();
+      return;
+    }
+
     const current = engine.getState();
     elements.completionBadge.textContent = `${engine.completion()}%`;
 
@@ -79,7 +181,14 @@ export function createTrainerUI({ engine, elements }) {
       return;
     }
 
-    elements.exerciseList.innerHTML = current.items
+    elements.exerciseList.innerHTML =
+      `<div class="card inline-row" style="justify-content: space-between;">
+        <strong>Plano semanal</strong>
+        <div>
+          <button class="secondary" data-action="edit-plan">Editar plano</button>
+        </div>
+      </div>` +
+      current.items
       .map(
         (item) => `
       <article class="exercise-card ${item.done ? 'done' : ''}" data-id="${item.id}">
@@ -109,6 +218,11 @@ export function createTrainerUI({ engine, elements }) {
     elements.exerciseList.querySelectorAll('[data-action]').forEach((node) => {
       node.addEventListener('click', (event) => {
         const { action, id } = event.currentTarget.dataset;
+        if (action === 'edit-plan') {
+          editingPlan = true;
+          renderExercises();
+          return;
+        }
         if (action === 'toggle') engine.toggleDone(id);
         if (action === 'plus') engine.changeLoad(id, 1);
         if (action === 'minus') engine.changeLoad(id, -1);
@@ -122,6 +236,21 @@ export function createTrainerUI({ engine, elements }) {
     elements.exportJsonBtn.onclick = () => downloadJson('hero-trainer-export.json', engine.exportData());
     elements.resetChecksBtn.onclick = () => {
       engine.resetChecks();
+      renderExercises();
+    };
+
+    // Botão de reset do plano semanal
+    let resetPlanBtn = document.getElementById('resetPlanBtn');
+    if (!resetPlanBtn) {
+      resetPlanBtn = document.createElement('button');
+      resetPlanBtn.id = 'resetPlanBtn';
+      resetPlanBtn.className = 'secondary danger';
+      resetPlanBtn.textContent = 'Resetar plano semanal';
+      elements.resetChecksBtn.parentNode.appendChild(resetPlanBtn);
+    }
+    resetPlanBtn.onclick = () => {
+      engine.resetPlan();
+      editingPlan = true;
       renderExercises();
     };
   }
