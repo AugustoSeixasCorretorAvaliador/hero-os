@@ -218,11 +218,13 @@ export function createEngine({ storage, insight, library, trainingPlan }) {
   }
 
   function getLibraryList() {
-    return Object.values(libraryMap).map((item) => ({
-      id: item.id,
-      label: item.label || item.id,
-      category: item.category
-    }));
+    return Object.values(libraryMap)
+      .map((item) => ({
+        id: item.id,
+        label: item.label || item.id,
+        category: item.category
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label, 'pt-BR', { sensitivity: 'base' }));
   }
 
   function hasStoredPlan() {

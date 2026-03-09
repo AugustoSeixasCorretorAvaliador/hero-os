@@ -115,6 +115,76 @@
           "level": "iniciante",
           "primaryMuscle": "quadriceps",
           "secondaryMuscle": "gluteos"
+        },
+        {
+          "id": "stiff-halter",
+          "label": "Stiff com halteres",
+          "equipment": "halter",
+          "videoUrl": "https://www.youtube.com/results?search_query=stiff+halter",
+          "benefit": "Trabalha posteriores e glúteos",
+          "progressionStep": 2,
+          "recoveryDays": 6,
+          "defaultLoad": 16,
+          "loadUnit": "kg",
+          "level": "intermediario",
+          "primaryMuscle": "posterior-coxa",
+          "secondaryMuscle": "gluteos"
+        },
+        {
+          "id": "elevacao-pelvica-barra",
+          "label": "Elevação pélvica com barra",
+          "equipment": "barra",
+          "videoUrl": "https://www.youtube.com/results?search_query=hip+thrust+barra",
+          "benefit": "Foca glúteos e estabiliza core",
+          "progressionStep": 4,
+          "recoveryDays": 6,
+          "defaultLoad": 30,
+          "loadUnit": "kg",
+          "level": "intermediario",
+          "primaryMuscle": "gluteos",
+          "secondaryMuscle": "posterior-coxa"
+        },
+        {
+          "id": "agachamento-sumo-kb",
+          "label": "Agachamento sumô com kettlebell",
+          "equipment": "kettlebell",
+          "videoUrl": "https://www.youtube.com/results?search_query=sumo+kettlebell",
+          "benefit": "Trabalha internos de coxa e glúteos",
+          "progressionStep": 2,
+          "recoveryDays": 6,
+          "defaultLoad": 16,
+          "loadUnit": "kg",
+          "level": "iniciante",
+          "primaryMuscle": "gluteos",
+          "secondaryMuscle": "adutores"
+        },
+        {
+          "id": "passada-lateral",
+          "label": "Passada lateral com halteres",
+          "equipment": "halter",
+          "videoUrl": "https://www.youtube.com/results?search_query=passada+lateral+halter",
+          "benefit": "Equilíbrio e fortalece adutores",
+          "progressionStep": 2,
+          "recoveryDays": 5,
+          "defaultLoad": 10,
+          "loadUnit": "kg",
+          "level": "iniciante",
+          "primaryMuscle": "quadriceps",
+          "secondaryMuscle": "adutores"
+        },
+        {
+          "id": "afundo-bulgaro",
+          "label": "Afundo búlgaro",
+          "equipment": "halter",
+          "videoUrl": "https://www.youtube.com/results?search_query=afundo+bulgaro",
+          "benefit": "Unilateral para glúteos e quadríceps",
+          "progressionStep": 2,
+          "recoveryDays": 6,
+          "defaultLoad": 12,
+          "loadUnit": "kg",
+          "level": "intermediario",
+          "primaryMuscle": "gluteos",
+          "secondaryMuscle": "quadriceps"
         }
       ]
     },
@@ -201,6 +271,48 @@
           "recoveryDays": 5,
           "defaultLoad": 10,
           "loadUnit": "kg"
+        },
+        {
+          "id": "supino-declinado",
+          "label": "Supino declinado",
+          "equipment": "barra",
+          "videoUrl": "https://www.youtube.com/results?search_query=supino+declinado",
+          "benefit": "Ênfase no peitoral inferior",
+          "progressionStep": 2,
+          "recoveryDays": 5,
+          "defaultLoad": 30,
+          "loadUnit": "kg",
+          "level": "intermediario",
+          "primaryMuscle": "peitoral-inferior",
+          "secondaryMuscle": "triceps"
+        },
+        {
+          "id": "flexao-solo",
+          "label": "Flexão de braço no solo",
+          "equipment": "peso corporal",
+          "videoUrl": "https://www.youtube.com/results?search_query=flexao+de+braco",
+          "benefit": "Peito e tríceps sem equipamento",
+          "progressionStep": 1,
+          "recoveryDays": 3,
+          "defaultLoad": 0,
+          "loadUnit": "bodyweight",
+          "level": "iniciante",
+          "primaryMuscle": "peitoral",
+          "secondaryMuscle": "triceps"
+        },
+        {
+          "id": "paralelas-peito",
+          "label": "Mergulho nas paralelas",
+          "equipment": "barra",
+          "videoUrl": "https://www.youtube.com/results?search_query=paralelas+peitoral",
+          "benefit": "Peito e ombro com peso corporal",
+          "progressionStep": 1,
+          "recoveryDays": 4,
+          "defaultLoad": 0,
+          "loadUnit": "bodyweight",
+          "level": "intermediario",
+          "primaryMuscle": "peitoral",
+          "secondaryMuscle": "triceps"
         }
       ]
     },
@@ -262,6 +374,48 @@
           "level": "iniciante",
           "primaryMuscle": "dorsal",
           "secondaryMuscle": "biceps"
+        },
+        {
+          "id": "remada-unilateral-halter",
+          "label": "Remada unilateral com halter",
+          "equipment": "halter",
+          "videoUrl": "https://www.youtube.com/results?search_query=remada+unilateral+halter",
+          "benefit": "Corrige desequilíbrios e ativa dorsais",
+          "progressionStep": 2,
+          "recoveryDays": 4,
+          "defaultLoad": 14,
+          "loadUnit": "kg",
+          "level": "iniciante",
+          "primaryMuscle": "dorsal",
+          "secondaryMuscle": "biceps"
+        },
+        {
+          "id": "face-pull",
+          "label": "Face pull no cabo",
+          "equipment": "cabo",
+          "videoUrl": "https://www.youtube.com/results?search_query=face+pull",
+          "benefit": "Fortalece deltoide posterior e postura",
+          "progressionStep": 1,
+          "recoveryDays": 3,
+          "defaultLoad": 10,
+          "loadUnit": "kg",
+          "level": "iniciante",
+          "primaryMuscle": "deltoide-posterior",
+          "secondaryMuscle": "trapezio"
+        },
+        {
+          "id": "pullover-cabo",
+          "label": "Pullover no cabo",
+          "equipment": "cabo",
+          "videoUrl": "https://www.youtube.com/results?search_query=pullover+cabo",
+          "benefit": "Alongamento e ativação de dorsais",
+          "progressionStep": 1,
+          "recoveryDays": 4,
+          "defaultLoad": 12,
+          "loadUnit": "kg",
+          "level": "iniciante",
+          "primaryMuscle": "dorsal",
+          "secondaryMuscle": "core"
         }
       ]
     },
@@ -309,6 +463,48 @@
           "level": "iniciante",
           "primaryMuscle": "deltoide",
           "secondaryMuscle": "trapezio"
+        },
+        {
+          "id": "arnold-press",
+          "label": "Desenvolvimento Arnold",
+          "equipment": "halter",
+          "videoUrl": "https://www.youtube.com/results?search_query=arnold+press",
+          "benefit": "Trabalha as três porções do deltoide",
+          "progressionStep": 2,
+          "recoveryDays": 5,
+          "defaultLoad": 12,
+          "loadUnit": "kg",
+          "level": "intermediario",
+          "primaryMuscle": "deltoide",
+          "secondaryMuscle": "triceps"
+        },
+        {
+          "id": "crucifixo-inverso",
+          "label": "Crucifixo inverso",
+          "equipment": "halter",
+          "videoUrl": "https://www.youtube.com/results?search_query=crucifixo+inverso+halter",
+          "benefit": "Isola deltoide posterior",
+          "progressionStep": 1,
+          "recoveryDays": 4,
+          "defaultLoad": 6,
+          "loadUnit": "kg",
+          "level": "iniciante",
+          "primaryMuscle": "deltoide-posterior",
+          "secondaryMuscle": "trapezio"
+        },
+        {
+          "id": "elevacao-lateral-cabo",
+          "label": "Elevação lateral no cabo",
+          "equipment": "cabo",
+          "videoUrl": "https://www.youtube.com/results?search_query=elevacao+lateral+cabo",
+          "benefit": "Tensão contínua no deltoide médio",
+          "progressionStep": 1,
+          "recoveryDays": 4,
+          "defaultLoad": 8,
+          "loadUnit": "kg",
+          "level": "iniciante",
+          "primaryMuscle": "deltoide",
+          "secondaryMuscle": "trapezio"
         }
       ]
     },
@@ -338,6 +534,34 @@
           "progressionStep": 2,
           "recoveryDays": 4,
           "defaultLoad": 10,
+          "loadUnit": "kg",
+          "level": "iniciante",
+          "primaryMuscle": "biceps",
+          "secondaryMuscle": "antebraco"
+        },
+        {
+          "id": "rosca-martelo",
+          "label": "Rosca martelo",
+          "equipment": "halter",
+          "videoUrl": "https://www.youtube.com/results?search_query=rosca+martelo",
+          "benefit": "Trabalha braquial e antebraço",
+          "progressionStep": 2,
+          "recoveryDays": 4,
+          "defaultLoad": 10,
+          "loadUnit": "kg",
+          "level": "iniciante",
+          "primaryMuscle": "biceps",
+          "secondaryMuscle": "antebraco"
+        },
+        {
+          "id": "rosca-scott",
+          "label": "Rosca Scott na máquina",
+          "equipment": "máquina",
+          "videoUrl": "https://www.youtube.com/results?search_query=rosca+scott+maquina",
+          "benefit": "Isola bíceps com apoio",
+          "progressionStep": 2,
+          "recoveryDays": 4,
+          "defaultLoad": 20,
           "loadUnit": "kg",
           "level": "iniciante",
           "primaryMuscle": "biceps",
@@ -389,6 +613,34 @@
           "level": "intermediario",
           "primaryMuscle": "triceps",
           "secondaryMuscle": "ombro"
+        },
+        {
+          "id": "mergulho-paralela",
+          "label": "Mergulho na paralela",
+          "equipment": "peso corporal",
+          "videoUrl": "https://www.youtube.com/results?search_query=mergulho+paralelas",
+          "benefit": "Tríceps e peitoral com peso corporal",
+          "progressionStep": 1,
+          "recoveryDays": 4,
+          "defaultLoad": 0,
+          "loadUnit": "bodyweight",
+          "level": "intermediario",
+          "primaryMuscle": "triceps",
+          "secondaryMuscle": "peitoral"
+        },
+        {
+          "id": "triceps-coice-halter",
+          "label": "Tríceps coice com halter",
+          "equipment": "halter",
+          "videoUrl": "https://www.youtube.com/results?search_query=triceps+coice",
+          "benefit": "Isola tríceps com controle",
+          "progressionStep": 1,
+          "recoveryDays": 3,
+          "defaultLoad": 8,
+          "loadUnit": "kg",
+          "level": "iniciante",
+          "primaryMuscle": "triceps",
+          "secondaryMuscle": "ombro"
         }
       ]
     },
@@ -422,6 +674,48 @@
           "level": "iniciante",
           "primaryMuscle": "core",
           "secondaryMuscle": "abdomen"
+        },
+        {
+          "id": "prancha-lateral",
+          "label": "Prancha lateral",
+          "equipment": "peso corporal",
+          "videoUrl": "https://www.youtube.com/results?search_query=prancha+lateral",
+          "benefit": "Estabiliza obliquos",
+          "progressionStep": 10,
+          "recoveryDays": 2,
+          "defaultLoad": 20,
+          "loadUnit": "segundos",
+          "level": "iniciante",
+          "primaryMuscle": "obliquos",
+          "secondaryMuscle": "core"
+        },
+        {
+          "id": "dead-bug",
+          "label": "Dead bug",
+          "equipment": "peso corporal",
+          "videoUrl": "https://www.youtube.com/results?search_query=dead+bug+exercicio",
+          "benefit": "Coordena tronco e respiração",
+          "progressionStep": 1,
+          "recoveryDays": 2,
+          "defaultLoad": 12,
+          "loadUnit": "reps",
+          "level": "iniciante",
+          "primaryMuscle": "core",
+          "secondaryMuscle": "abdomen"
+        },
+        {
+          "id": "ab-wheel",
+          "label": "Ab wheel",
+          "equipment": "roda",
+          "videoUrl": "https://www.youtube.com/results?search_query=ab+wheel",
+          "benefit": "Desafia core de forma progressiva",
+          "progressionStep": 1,
+          "recoveryDays": 3,
+          "defaultLoad": 8,
+          "loadUnit": "reps",
+          "level": "intermediario",
+          "primaryMuscle": "abdomen",
+          "secondaryMuscle": "core"
         }
       ]
     },
@@ -469,6 +763,170 @@
           "level": "iniciante",
           "primaryMuscle": "cardiovascular",
           "secondaryMuscle": "pernas"
+        },
+        {
+          "id": "air-bike",
+          "label": "Air bike",
+          "equipment": "cardio",
+          "videoUrl": "https://www.youtube.com/results?search_query=air+bike+hiit",
+          "benefit": "Cardio intenso de corpo todo",
+          "progressionStep": 1,
+          "recoveryDays": 1,
+          "defaultLoad": 6,
+          "loadUnit": "minutos",
+          "level": "intermediario",
+          "primaryMuscle": "cardiovascular",
+          "secondaryMuscle": "pernas"
+        },
+        {
+          "id": "subida-escada",
+          "label": "Subida em escada",
+          "equipment": "cardio",
+          "videoUrl": "https://www.youtube.com/results?search_query=subida+escada+cardio",
+          "benefit": "Cardio com foco em glúteos e panturrilha",
+          "progressionStep": 1,
+          "recoveryDays": 1,
+          "defaultLoad": 8,
+          "loadUnit": "minutos",
+          "level": "iniciante",
+          "primaryMuscle": "cardiovascular",
+          "secondaryMuscle": "gluteos"
+        }
+      ]
+    },
+    {
+      "name": "aquecimento",
+      "exercises": [
+        {
+          "id": "polichinelo",
+          "label": "Polichinelo",
+          "equipment": "peso corporal",
+          "videoUrl": "https://www.youtube.com/results?search_query=polichinelo",
+          "benefit": "Eleva pulsar e aquece globalmente",
+          "progressionStep": 5,
+          "recoveryDays": 1,
+          "defaultLoad": 30,
+          "loadUnit": "segundos",
+          "level": "iniciante",
+          "primaryMuscle": "cardiovascular",
+          "secondaryMuscle": "pernas"
+        },
+        {
+          "id": "mobilidade-ombro-bastao",
+          "label": "Mobilidade de ombro com bastão",
+          "equipment": "bastao",
+          "videoUrl": "https://www.youtube.com/results?search_query=dislocacao+ombro+bastao",
+          "benefit": "Prepara ombros para press e puxadas",
+          "progressionStep": 5,
+          "recoveryDays": 1,
+          "defaultLoad": 30,
+          "loadUnit": "segundos",
+          "level": "iniciante",
+          "primaryMuscle": "ombro",
+          "secondaryMuscle": "peitoral"
+        },
+        {
+          "id": "mobilidade-quadril-circulos",
+          "label": "Círculos de quadril",
+          "equipment": "peso corporal",
+          "videoUrl": "https://www.youtube.com/results?search_query=circulos+quadril+mobilidade",
+          "benefit": "Lubrifica quadril antes de agachar",
+          "progressionStep": 5,
+          "recoveryDays": 1,
+          "defaultLoad": 20,
+          "loadUnit": "segundos",
+          "level": "iniciante",
+          "primaryMuscle": "quadril",
+          "secondaryMuscle": "core"
+        },
+        {
+          "id": "corrida-leve",
+          "label": "Corrida leve",
+          "equipment": "cardio",
+          "videoUrl": "https://www.youtube.com/results?search_query=corrida+leve+esteira",
+          "benefit": "Aquecimento gradual antes do treino",
+          "progressionStep": 1,
+          "recoveryDays": 1,
+          "defaultLoad": 5,
+          "loadUnit": "minutos",
+          "level": "iniciante",
+          "primaryMuscle": "cardiovascular",
+          "secondaryMuscle": "pernas"
+        }
+      ]
+    },
+    {
+      "name": "alongamento",
+      "exercises": [
+        {
+          "id": "alongamento-peitoral-parede",
+          "label": "Alongamento peitoral na parede",
+          "equipment": "nenhum",
+          "videoUrl": "https://www.youtube.com/results?search_query=alongamento+peitoral+parede",
+          "benefit": "Descomprime ombros e peito pós treino",
+          "progressionStep": 5,
+          "recoveryDays": 1,
+          "defaultLoad": 30,
+          "loadUnit": "segundos",
+          "level": "iniciante",
+          "primaryMuscle": "peitoral",
+          "secondaryMuscle": "ombro"
+        },
+        {
+          "id": "alongamento-flexor-quadril",
+          "label": "Alongamento flexor de quadril",
+          "equipment": "nenhum",
+          "videoUrl": "https://www.youtube.com/results?search_query=alongamento+flexor+quadril",
+          "benefit": "Alivia tensão em agachamentos",
+          "progressionStep": 5,
+          "recoveryDays": 1,
+          "defaultLoad": 30,
+          "loadUnit": "segundos",
+          "level": "iniciante",
+          "primaryMuscle": "quadril",
+          "secondaryMuscle": "quadriceps"
+        },
+        {
+          "id": "alongamento-isquiotibiais",
+          "label": "Alongamento posteriores em dobradiça",
+          "equipment": "nenhum",
+          "videoUrl": "https://www.youtube.com/results?search_query=alongamento+isquiotibiais",
+          "benefit": "Recupera posteriores após stiff",
+          "progressionStep": 5,
+          "recoveryDays": 1,
+          "defaultLoad": 30,
+          "loadUnit": "segundos",
+          "level": "iniciante",
+          "primaryMuscle": "posterior-coxa",
+          "secondaryMuscle": "panturrilha"
+        },
+        {
+          "id": "alongamento-gluteo-fig4",
+          "label": "Alongamento glúteo figura 4",
+          "equipment": "nenhum",
+          "videoUrl": "https://www.youtube.com/results?search_query=alongamento+figura+4",
+          "benefit": "Descomprime quadril e lombar",
+          "progressionStep": 5,
+          "recoveryDays": 1,
+          "defaultLoad": 30,
+          "loadUnit": "segundos",
+          "level": "iniciante",
+          "primaryMuscle": "gluteos",
+          "secondaryMuscle": "lombar"
+        },
+        {
+          "id": "alongamento-triceps-cabeca",
+          "label": "Alongamento tríceps acima da cabeça",
+          "equipment": "nenhum",
+          "videoUrl": "https://www.youtube.com/results?search_query=alongamento+triceps",
+          "benefit": "Recupera tríceps e ombro",
+          "progressionStep": 5,
+          "recoveryDays": 1,
+          "defaultLoad": 30,
+          "loadUnit": "segundos",
+          "level": "iniciante",
+          "primaryMuscle": "triceps",
+          "secondaryMuscle": "ombro"
         }
       ]
     }
