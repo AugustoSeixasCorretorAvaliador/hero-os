@@ -26,7 +26,9 @@ export function createEngine({ storage, insight }) {
     const saved = storage.get('state');
     const savedProfile = storage.get('profile');
 
-    state = saved
+    const isSameDay = saved && saved.date === todayISO();
+
+    state = isSameDay
       ? withInsights(saved)
       : withInsights({
           module: template.module,

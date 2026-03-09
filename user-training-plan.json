@@ -1,0 +1,29 @@
+{
+  "userId": "jose-augusto",
+  "trainingDays": [
+    {
+      "day": "segunda",
+      "title": "Pernas",
+      "exercises": [
+        "agachamento-livre",
+        "leg-press",
+        "cadeira-extensora"
+      ]
+    },
+    {
+      "day": "quarta",
+      "title": "Peito",
+      "exercises": [
+        "supino-reto",
+        "crucifixo"
+      ]
+    },
+    {
+      "day": "sexta",
+      "title": "Cardio",
+      "exercises": [
+        "esteira"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "splits": [
+    {
+      "code": "3x-semana",
+      "label": "3x semana (fullbody/alternado)",
+      "trainingDays": [
+        { "day": "segunda", "title": "Pernas + Core", "exercises": ["agachamento-livre", "leg-press", "cadeira-extensora"] },
+        { "day": "quarta", "title": "Peito", "exercises": ["supino-reto", "crucifixo"] },
+        { "day": "sexta", "title": "Cardio", "exercises": ["esteira"] }
+      ]
+    },
+    {
+      "code": "4x-semana",
+      "label": "4x semana (A/B)",
+      "trainingDays": [
+        { "day": "segunda", "title": "Pernas", "exercises": ["agachamento-livre", "leg-press", "cadeira-extensora"] },
+        { "day": "terça", "title": "Peito", "exercises": ["supino-reto", "crucifixo"] },
+        { "day": "quinta", "title": "Pernas", "exercises": ["agachamento-livre", "leg-press"] },
+        { "day": "sexta", "title": "Cardio", "exercises": ["esteira"] }
+      ]
+    },
+    {
+      "code": "5x-semana",
+      "label": "5x semana (ABC + cardio)",
+      "trainingDays": [
+        { "day": "segunda", "title": "Pernas", "exercises": ["agachamento-livre", "leg-press", "cadeira-extensora"] },
+        { "day": "terça", "title": "Peito", "exercises": ["supino-reto", "crucifixo"] },
+        { "day": "quarta", "title": "Cardio", "exercises": ["esteira"] },
+        { "day": "quinta", "title": "Pernas", "exercises": ["agachamento-livre", "leg-press"] },
+        { "day": "sexta", "title": "Peito + cardio leve", "exercises": ["supino-reto", "esteira"] }
+      ]
+    }
+  ]
+}
