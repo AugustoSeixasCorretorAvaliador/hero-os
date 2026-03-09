@@ -6,14 +6,24 @@ function clone(data) {
   return JSON.parse(JSON.stringify(data));
 }
 
+function latestHistoryFor(id, history) {
+  return history
+    .filter((h) => h.exerciseId === id)
+    .sort((a, b) => (a.date < b.date ? 1 : -1))[0];
+}
+
 export function createEngine({ storage, insight }) {
   let state = null;
+  let history = [];
 
   function withInsights(current) {
-    current.items = current.items.map((item) => ({
-      ...item,
-      suggestion: insight.forItem(item)
-    }));
+    current.items = current.items.map((item) => {
+      const lastHist = latestHistoryFor(item.id, history);
+      return {
+        ...item,
+        suggestion: insight.forItem(item, lastHist)
+      };
+    });
     return current;
   }
 
@@ -24,19 +34,29 @@ export function createEngine({ storage, insight }) {
 
   function init(template) {
     const saved = storage.get('state');
+    history = storage.get('training-history', []);
     const savedProfile = storage.get('profile');
 
     const isSameDay = saved && saved.date === todayISO();
 
-    state = isSameDay
-      ? withInsights(saved)
-      : withInsights({
-          module: template.module,
-          title: template.title,
-          date: todayISO(),
-          profile: savedProfile || clone(template.profile),
-          items: clone(template.items)
-        });
+    const baseTemplate = {
+      module: template.module,
+      title: template.title,
+      date: todayISO(),
+      profile: savedProfile || clone(template.profile),
+      items: clone(template.items)
+    };
+
+    const mergeHistory = (items) =>
+      items.map((item) => {
+        const lastHist = latestHistoryFor(item.id, history);
+        const load = (lastHist && lastHist.load) ?? item.load ?? item.defaultLoad ?? 0;
+        const loadDate = (lastHist && lastHist.date) ?? item.loadDate ?? todayISO();
+        return { ...item, load, loadDate, done: false };
+      });
+
+    state = isSameDay ? saved : { ...baseTemplate, items: mergeHistory(baseTemplate.items) };
+    state = withInsights(state);
 
     return state;
   }
@@ -52,16 +72,33 @@ export function createEngine({ storage, insight }) {
   }
 
   function toggleDone(itemId) {
-    state.items = state.items.map((item) =>
-      item.id === itemId ? { ...item, done: !item.done, completedAt: !item.done ? todayISO() : null } : item
-    );
+    const today = todayISO();
+
+    state.items = state.items.map((item) => {
+      if (item.id !== itemId) return item;
+      const toggled = { ...item, done: !item.done, completedAt: !item.done ? today : null };
+      if (!item.done) {
+        const record = {
+          exerciseId: item.id,
+          load: item.load,
+          date: today,
+          completed: true
+        };
+        history = storage.append('training-history', record);
+        toggled.loadDate = today;
+      }
+      toggled.suggestion = insight.forItem(toggled, latestHistoryFor(item.id, history));
+      return toggled;
+    });
+
     return save();
   }
 
   function changeLoad(itemId, delta) {
     state.items = state.items.map((item) => {
       if (item.id !== itemId) return item;
-      const load = Math.max(0, Number((item.load + delta).toFixed(1)));
+      const step = item.progressionStep || 1;
+      const load = Math.max(0, Number((item.load + delta * step).toFixed(1)));
       const updated = { ...item, load, loadDate: todayISO() };
       updated.suggestion = insight.forItem(updated);
       return updated;
@@ -84,7 +121,8 @@ export function createEngine({ storage, insight }) {
     return {
       exportedAt: new Date().toISOString(),
       state,
-      storage: storage.export()
+      storage: storage.export(),
+      history
     };
   }
 

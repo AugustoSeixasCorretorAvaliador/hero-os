@@ -15,6 +15,13 @@ export function createStorage(namespace = 'hero-os') {
       localStorage.setItem(key(name), JSON.stringify(value));
     },
 
+    append(name, value) {
+      const list = this.get(name, []);
+      list.push(value);
+      this.set(name, list);
+      return list;
+    },
+
     remove(name) {
       localStorage.removeItem(key(name));
     },

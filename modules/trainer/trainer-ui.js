@@ -93,6 +93,7 @@ export function createTrainerUI({ engine, state, elements }) {
 
         <div class="insight"><strong>Insight:</strong> ${item.suggestion.benefit}</div>
         <div class="suggestion"><strong>Próxima sugestão:</strong> ${item.suggestion.nextLoad} ${item.loadUnit} em ${item.suggestion.nextDate}</div>
+        <div class="hint">${item.suggestion.recoveryReminder}</div>
       </article>
     `).join('');
 
