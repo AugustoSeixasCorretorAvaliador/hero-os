@@ -8,14 +8,56 @@ function profileSummary(profile) {
   return parts.join(' • ');
 }
 
-function downloadJson(filename, data) {
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  link.click();
-  URL.revokeObjectURL(url);
+function exportPdf(filename, data) {
+  const printable = `
+    <html>
+      <head>
+        <title>${filename}</title>
+        <style>
+          body { font-family: Arial, sans-serif; padding: 24px; color: #0b1220; }
+          h1 { margin: 0 0 8px; }
+          h2 { margin: 16px 0 8px; }
+          .muted { color: #4b5563; font-size: 13px; }
+          pre { background: #f3f4f6; padding: 12px; border-radius: 8px; overflow: auto; }
+          table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+          td { padding: 6px 4px; border-bottom: 1px solid #e5e7eb; }
+        </style>
+      </head>
+      <body>
+        <h1>HERO Trainer - Export</h1>
+        <div class="muted">Gerado em ${new Date().toLocaleString()}</div>
+
+        <h2>Perfil</h2>
+        <table>
+          <tr><td>Nome</td><td>${data.state.profile.name || '-'}</td></tr>
+          <tr><td>Idade</td><td>${data.state.profile.age || '-'}</td></tr>
+          <tr><td>Peso</td><td>${data.state.profile.weight || '-'}</td></tr>
+          <tr><td>Altura</td><td>${data.state.profile.height || '-'}</td></tr>
+          <tr><td>Sexo</td><td>${data.state.profile.sex || '-'}</td></tr>
+        </table>
+
+        <h2>Estado atual</h2>
+        <pre>${JSON.stringify(data.state, null, 2)}</pre>
+
+        <h2>Histórico</h2>
+        <pre>${JSON.stringify(data.history, null, 2)}</pre>
+
+        <h2>Storage</h2>
+        <pre>${JSON.stringify(data.storage, null, 2)}</pre>
+      </body>
+    </html>
+  `;
+
+  const printWindow = window.open('', '_blank');
+  if (!printWindow) {
+    alert('Pop-up bloqueado: permita pop-ups para exportar PDF.');
+    return;
+  }
+  printWindow.document.open();
+  printWindow.document.write(printable);
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.print();
 }
 
 export function createTrainerUI({ engine, elements }) {
@@ -233,7 +275,8 @@ export function createTrainerUI({ engine, elements }) {
 
   function bindFooter() {
     elements.saveWorkoutBtn.onclick = () => engine.save();
-    elements.exportJsonBtn.onclick = () => downloadJson('hero-trainer-export.json', engine.exportData());
+    elements.exportJsonBtn.textContent = 'Exportar PDF';
+    elements.exportJsonBtn.onclick = () => exportPdf('hero-trainer-export.pdf', engine.exportData());
     elements.resetChecksBtn.onclick = () => {
       engine.resetChecks();
       renderExercises();
