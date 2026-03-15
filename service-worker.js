@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hero-os-v1';
+const CACHE_NAME = 'hero-os-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -11,6 +11,7 @@ const ASSETS = [
   './core/insight.js',
   './modules/trainer/trainer-ui.js',
   './modules/trainer/trainer-template.json',
+  './icons/hero-trainer.png',
   './icons/icon-192.png',
   './icons/icon-512.png'
 ];
