@@ -105,6 +105,12 @@ button {
 }
 button.secondary { background: #eef2f7; color: var(--text); }
 button.ghost { background: transparent; color: var(--brand); border: 1px solid var(--line); }
+button.auto-btn,
+.auto-btn {
+  background: linear-gradient(135deg, #1b86ff, #0f5bd8);
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(27, 134, 255, 0.22);
+}
 button.danger { color: var(--danger); }
 button.icon-btn { min-width: 52px; width: 52px; }
 button:active { transform: translateY(1px); }
@@ -159,10 +165,16 @@ button:active { transform: translateY(1px); }
   gap: 10px;
   margin-top: 12px;
 }
+.wrap-row {
+  flex-wrap: wrap;
+}
 .load-value {
   min-width: 86px;
   text-align: center;
   font-weight: 700;
+}
+.load-box {
+  min-width: 120px;
 }
 .link-btn {
   display: inline-flex;
@@ -179,9 +191,115 @@ button:active { transform: translateY(1px); }
   gap: 10px;
   margin-top: 16px;
 }
+.plan-choice-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.plan-choice-kicker {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-2);
+  margin-bottom: 8px;
+}
+.plan-choice-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.plan-choice-actions button {
+  min-width: 140px;
+}
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.plan-day {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 12px;
+  background: #f8fbff;
+}
+.plan-day label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.plan-day input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+.plan-day select {
+  min-height: 146px;
+  padding: 10px;
+}
+.auto-plan-panel,
+.manual-plan-panel {
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+  margin-top: 12px;
+}
+.auto-plan-title {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.auto-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.level-card {
+  display: grid;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px;
+  background: #fff;
+  cursor: pointer;
+}
+.level-card.active {
+  border-color: #1b86ff;
+  background: #eef6ff;
+  box-shadow: 0 10px 20px rgba(27, 134, 255, 0.14);
+}
+.level-card input {
+  width: auto;
+  min-height: auto;
+  margin: 0;
+}
+.level-card span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+.plan-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
 .hint { color: var(--muted); font-size: .88rem; margin-top: 8px; }
 .small { font-size: .88rem; }
 
 @media (max-width: 560px) {
   .profile-grid { grid-template-columns: 1fr; }
+  .plan-choice-head,
+  .plan-banner,
+  .plan-choice-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .plan-grid,
+  .auto-plan-grid {
+    grid-template-columns: 1fr;
+  }
 }

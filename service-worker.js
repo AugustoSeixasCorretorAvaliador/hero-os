@@ -1,11 +1,14 @@
-const CACHE_NAME = 'hero-os-v2';
+const CACHE_NAME = 'hero-os-v3';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './app.js',
+  './bootstrap.js',
+  './js/license.js',
   './manifest.json',
   './core/engine.js',
+  './core/auto-plan.js',
   './core/storage.js',
   './core/template-loader.js',
   './core/insight.js',

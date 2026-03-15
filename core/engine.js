@@ -1,3 +1,5 @@
+import { buildAutoTrainingPlan } from './auto-plan.js';
+
 const DAY_ALIASES = {
   sunday: ['domingo'],
   monday: ['segunda', 'segunda-feira'],
@@ -90,6 +92,17 @@ function exercisesForDay(plan, dayKey) {
   return [];
 }
 
+function normalizeExerciseEntry(entry) {
+  if (typeof entry === 'string') return { id: entry };
+  if (entry && typeof entry === 'object' && entry.id) return entry;
+  return { id: String(entry || '') };
+}
+
+function entrySignature(entry) {
+  const normalized = normalizeExerciseEntry(entry);
+  return [normalized.id, normalized.sets || '', normalized.reps || '', normalized.load ?? ''].join(':');
+}
+
 export function createEngine({ storage, insight, library, trainingPlan }) {
   const libraryMap = indexLibrary(library);
   const planFromStorage = storage.get('trainingPlan', null);
@@ -103,8 +116,8 @@ export function createEngine({ storage, insight, library, trainingPlan }) {
     items: []
   };
 
-  function computeSuggested(meta, lastHistory, today = todayISO()) {
-    if (!lastHistory || !lastHistory.date) return meta.defaultLoad ?? 0;
+  function computeSuggested(meta, lastHistory, today = todayISO(), fallbackLoad = meta.defaultLoad ?? 0) {
+    if (!lastHistory || !lastHistory.date) return fallbackLoad;
     const gap = daysBetween(lastHistory.date, today);
     const canProgress = gap >= (meta.recoveryDays || 0);
     const step = meta.progressionStep || 0;
@@ -124,12 +137,13 @@ export function createEngine({ storage, insight, library, trainingPlan }) {
     });
   }
 
-  function hydrateExercise(id, todayIso) {
+  function hydrateExercise(entry, todayIso) {
+    const normalizedEntry = normalizeExerciseEntry(entry);
     const meta =
-      libraryMap[id] ||
+      libraryMap[normalizedEntry.id] ||
       {
-        id,
-        label: id,
+        id: normalizedEntry.id,
+        label: normalizedEntry.id,
         equipment: 'livre',
         videoUrl: '',
         progressionStep: 1,
@@ -138,9 +152,10 @@ export function createEngine({ storage, insight, library, trainingPlan }) {
         loadUnit: 'kg'
       };
 
-    const last = latestHistoryFor(id, history);
-    const currentLoad = last?.load ?? meta.defaultLoad ?? 0;
-    const suggestedLoad = computeSuggested(meta, last, todayIso);
+    const baseLoad = Number(normalizedEntry.load ?? meta.defaultLoad ?? 0);
+    const last = latestHistoryFor(normalizedEntry.id, history);
+    const currentLoad = last?.load ?? baseLoad;
+    const suggestedLoad = computeSuggested(meta, last, todayIso, baseLoad);
 
     return {
       id: meta.id,
@@ -148,11 +163,15 @@ export function createEngine({ storage, insight, library, trainingPlan }) {
       equipment: meta.equipment || 'livre',
       category: meta.category,
       load: Number(currentLoad.toFixed(1)),
+      prescribedLoad: Number(baseLoad.toFixed(1)),
       suggestedLoad,
       loadUnit: meta.loadUnit || 'kg',
       progressionStep: meta.progressionStep || 0,
       recoveryDays: meta.recoveryDays || 0,
       videoUrl: meta.videoUrl || '',
+      sets: normalizedEntry.sets || 3,
+      reps: normalizedEntry.reps || '-',
+      role: normalizedEntry.role || 'manual',
       lastDate: last?.date || null,
       done: false,
       insight: buildInsight(meta, last, suggestedLoad)
@@ -164,12 +183,16 @@ export function createEngine({ storage, insight, library, trainingPlan }) {
     const today = todayISO(date);
     const dayKey = dayKeyFromDate(date);
 
-    const exerciseIds = exercisesForDay(plan, dayKey);
-    const planSignature = `${dayKey}:${exerciseIds.join('|')}`;
+    const exerciseEntries = exercisesForDay(plan, dayKey).map(normalizeExerciseEntry);
+    const planSignature = `${dayKey}:${exerciseEntries.map(entrySignature).join('|')}`;
 
     const saved = storage.get('state');
     const savedSignature =
-      saved && saved.items ? `${saved.dayKey}:${saved.items.map((i) => i.id).join('|')}` : null;
+      saved && saved.items
+        ? `${saved.dayKey}:${saved.items
+            .map((item) => entrySignature({ id: item.id, sets: item.sets, reps: item.reps, load: item.prescribedLoad }))
+            .join('|')}`
+        : null;
 
     const canReuseSaved = saved && saved.date === today && savedSignature === planSignature;
     if (canReuseSaved) {
@@ -177,7 +200,7 @@ export function createEngine({ storage, insight, library, trainingPlan }) {
       return state;
     }
 
-    const items = exerciseIds.map((id) => hydrateExercise(id, today));
+    const items = exerciseEntries.map((entry) => hydrateExercise(entry, today));
 
     state = {
       ...state,
@@ -215,6 +238,15 @@ export function createEngine({ storage, insight, library, trainingPlan }) {
 
   function getTrainingPlan() {
     return plan;
+  }
+
+  function applyAutoPlan(level) {
+    const autoPlan = buildAutoTrainingPlan({
+      level,
+      profile: state.profile,
+      libraryMap
+    });
+    return updatePlan(autoPlan);
   }
 
   function getLibraryList() {
@@ -256,6 +288,9 @@ export function createEngine({ storage, insight, library, trainingPlan }) {
         const record = {
           exerciseId: item.id,
           load: toggled.load,
+          prescribedLoad: item.prescribedLoad,
+          sets: item.sets,
+          reps: item.reps,
           date: today,
           completed: true
         };
@@ -279,7 +314,7 @@ export function createEngine({ storage, insight, library, trainingPlan }) {
       const step = meta.progressionStep || 1;
       const load = Math.max(0, Number((item.load + delta * step).toFixed(1)));
       const latest = latestHistoryFor(item.id, history) || { load, date: todayISO() };
-      const suggestedLoad = computeSuggested(meta, latest, todayISO());
+      const suggestedLoad = computeSuggested(meta, latest, todayISO(), item.prescribedLoad ?? load);
       return {
         ...item,
         load,
@@ -322,6 +357,7 @@ export function createEngine({ storage, insight, library, trainingPlan }) {
     save,
     hasPlan,
     updatePlan,
+    applyAutoPlan,
     resetPlan,
     getTrainingPlan,
     getLibraryList,

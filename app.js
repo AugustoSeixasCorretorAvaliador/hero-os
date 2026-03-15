@@ -4,7 +4,11 @@ import { loadTemplate } from './core/template-loader.js';
 import { createInsight } from './core/insight.js';
 import { createTrainerUI } from './modules/trainer/trainer-ui.js';
 
-async function bootstrap() {
+let appInstance = null;
+
+export async function startTrainerApp() {
+  if (appInstance) return appInstance;
+
   const [library, userPlan] = await Promise.all([
     loadTemplate('./exercise-library.json'),
     loadTemplate('./user-training-plan.json')
@@ -21,7 +25,7 @@ async function bootstrap() {
 
   engine.generateWorkout();
 
-  createTrainerUI({
+  appInstance = createTrainerUI({
     engine,
     elements: {
       profileSection: document.getElementById('profileSection'),
@@ -33,10 +37,13 @@ async function bootstrap() {
       installBtn: document.getElementById('installBtn')
     }
   });
+
+  return appInstance;
 }
 
-bootstrap();
-
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js'));
+  const registerServiceWorker = () => navigator.serviceWorker.register('./service-worker.js');
+
+  if (document.readyState === 'complete') registerServiceWorker();
+  else window.addEventListener('load', registerServiceWorker, { once: true });
 }
